@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123d2b">
+  <title>Green-Loop Logistics | Circular Supply Chain</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: {
+          forest: { 950:'#0b241a', 900:'#123d2b', 800:'#18543a', 700:'#216b49' },
+          mint: { 50:'#effcf5', 100:'#d9f8e6', 300:'#8ce8b3', 400:'#55d98a', 500:'#2cc875' },
+          ink:'#1c2b24', muted:'#708078', canvas:'#f5f8f5'
+        },
+        boxShadow: { soft:'0 12px 40px rgba(18,61,43,.07)' }
+      }}
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-canvas text-ink antialiased">
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <header class="sticky top-0 z-40 border-b border-emerald-950/5 bg-white/90 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <a href="#" class="flex items-center gap-3" data-screen="home" aria-label="Green-Loop home">
+        <span class="brand-mark"><span>↻</span></span>
+        <span><span class="block font-display text-base font-extrabold tracking-tight text-forest-900">green-loop</span><span class="-mt-1 block text-[10px] font-bold uppercase tracking-[.2em] text-muted">logistics</span></span>
+      </a>
+      <nav class="hidden items-center gap-1 md:flex" aria-label="Main navigation">
+        <button class="nav-link active" data-screen="home">Overview</button>
+        <button class="nav-link" data-screen="vendor">Vendor</button>
+        <button class="nav-link" data-screen="driver">Driver</button>
+        <button class="nav-link" data-screen="admin">Management</button>
+      </nav>
+      <div class="flex items-center gap-2">
+        <span class="hidden rounded-full bg-mint-50 px-3 py-1.5 text-xs font-bold text-forest-800 sm:inline-flex"><span class="live-dot"></span> Simulation live</span>
+        <button class="rounded-full bg-forest-900 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-forest-800" data-screen="vendor">Open dashboard <span aria-hidden="true">↗</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- LANDING -->
+    <section id="screen-home" class="screen">
+      <div class="hero-bg overflow-hidden">
+        <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.05fr_.95fr] lg:px-8">
+          <div class="relative z-10">
+            <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-mint-300/60 bg-white/70 px-3 py-1.5 text-xs font-bold text-forest-800"><span class="live-dot"></span> A smarter circular supply chain</div>
+            <h1 class="max-w-2xl font-display text-5xl font-extrabold leading-[1.06] tracking-[-.055em] text-forest-950 sm:text-6xl lg:text-7xl">Waste less.<br><span class="text-forest-700">Grow more.</span></h1>
+            <p class="mt-6 max-w-xl text-base leading-8 text-slate-600 sm:text-lg">We connect vegetable market vendors, local drivers and processing centres to turn everyday organic waste into valuable bio-fertilizer.</p>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <button class="btn-primary" data-screen="vendor">Vendor Registration <span>↗</span></button>
+              <button class="btn-secondary" data-screen="driver">Driver Sign-Up <span>↗</span></button>
+            </div>
+            <div class="mt-12 grid max-w-lg grid-cols-3 gap-5 border-t border-forest-900/10 pt-6">
+              <div><div class="font-display text-2xl font-extrabold text-forest-900" id="hero-waste">0 kg</div><div class="mt-1 text-xs text-muted">Waste logged</div></div>
+              <div><div class="font-display text-2xl font-extrabold text-forest-900" id="hero-fertilizer">0 kg</div><div class="mt-1 text-xs text-muted">Fertilizer est.</div></div>
+              <div><div class="font-display text-2xl font-extrabold text-forest-900" id="hero-vendors">0</div><div class="mt-1 text-xs text-muted">Contributions</div></div>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="absolute -inset-5 rounded-[2.5rem] bg-mint-300/30 blur-3xl"></div>
+            <div class="relative rounded-[2rem] border border-white bg-white p-4 shadow-2xl shadow-forest-900/10 sm:p-6">
+              <div class="flex items-center justify-between px-2 pb-5">
+                <div><p class="text-xs font-bold uppercase tracking-[.18em] text-muted">The green loop</p><h2 class="mt-1 font-display text-xl font-extrabold">One local cycle. More value.</h2></div>
+                <span class="rounded-full bg-mint-50 px-3 py-1 text-xs font-bold text-forest-800">Circular</span>
+              </div>
+              <div class="loop-visual">
+                <div class="loop-node node-market"><span class="loop-icon">🥬</span><b>Market waste</b><small>Collect locally</small></div>
+                <div class="loop-arrow arrow-one">→</div>
+                <div class="loop-node node-transport"><span class="loop-icon">🚚</span><b>Local pickup</b><small>Smart routing</small></div>
+                <div class="loop-arrow arrow-two">↓</div>
+                <div class="loop-node node-process"><span class="loop-icon">♻️</span><b>Processing</b><small>Upcycle organics</small></div>
+                <div class="loop-arrow arrow-three">←</div>
+                <div class="loop-node node-farm"><span class="loop-icon">🌱</span><b>Bio-fertilizer</b><small>Back to farms</small></div>
+                <div class="loop-center"><span>LOCAL</span><b>GREEN<br>LOOP</b><small>VALUE CIRCULATES</small></div>
+              </div>
+              <div class="mt-5 flex items-center justify-between rounded-2xl bg-forest-950 px-5 py-4 text-white">
+                <div><p class="text-xs text-mint-300">Our mission</p><p class="mt-1 text-sm font-semibold">Make organic waste a local resource.</p></div>
+                <span class="text-3xl text-mint-300">↗</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div class="max-w-2xl"><p class="eyebrow">The challenge</p><h2 class="section-title">A missed opportunity hiding in plain sight.</h2><p class="mt-4 leading-7 text-muted">Fresh produce markets generate organic leftovers every day. Without a coordinated local collection system, valuable material can be mixed with general waste and sent to landfill.</p></div>
+        <div class="mt-9 grid gap-4 md:grid-cols-3">
+          <article class="info-card"><span class="feature-icon">01</span><h3>Fragmented collection</h3><p>Vendors need a dependable, simple way to schedule organic waste pickups.</p></article>
+          <article class="info-card"><span class="feature-icon">02</span><h3>Uncoordinated transport</h3><p>Local drivers need clear pickup requests and a destination they can plan around.</p></article>
+          <article class="info-card"><span class="feature-icon">03</span><h3>Lost resource value</h3><p>Segregated organic waste can become a useful input for local fertilizer production.</p></article>
+        </div>
+      </section>
+      <section class="bg-forest-950 py-16 text-white">
+        <div class="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+          <div><p class="eyebrow text-mint-300">How it works</p><h2 class="section-title text-white">A short journey from stall to soil.</h2><p class="mt-4 max-w-lg leading-7 text-white/60">Green-Loop coordinates the people and places that make localized reverse logistics possible.</p></div>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div class="step-card"><span>1</span><h3>Vendor logs waste</h3><p>Record the weight and request a pickup.</p></div>
+            <div class="step-card"><span>2</span><h3>Driver collects</h3><p>Accept a nearby request and transport the load.</p></div>
+            <div class="step-card"><span>3</span><h3>Centre processes</h3><p>Organic waste is converted into fertilizer.</p></div>
+            <div class="step-card"><span>4</span><h3>Value returns</h3><p>Fertilizer is sold into the agricultural market.</p></div>
+          </div>
+        </div>
+      </section>
+      <section class="mx-auto max-w-7xl px-4 py-16 text-center sm:px-6 lg:px-8"><p class="eyebrow">Join the loop</p><h2 class="section-title mx-auto max-w-2xl">Small local actions. A stronger circular economy.</h2><div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row"><button class="btn-primary" data-screen="vendor">I'm a vendor</button><button class="btn-secondary" data-screen="driver">I'm a driver</button></div></section>
+    </section>
+
+    <!-- VENDOR -->
+    <section id="screen-vendor" class="screen hidden">
+      <div class="dashboard-wrap">
+        <div class="page-heading"><div><p class="eyebrow">Partner workspace</p><h1 class="page-title">Vendor dashboard</h1><p class="mt-2 text-sm text-muted">Turn your daily organic leftovers into measurable impact and rewards.</p></div><span class="status-pill"><span class="live-dot"></span> Vendor portal</span></div>
+        <div class="grid gap-5 lg:grid-cols-[1.45fr_.8fr]">
+          <div class="rounded-3xl bg-forest-900 p-6 text-white shadow-soft sm:p-8">
+            <div class="flex flex-wrap items-start justify-between gap-4"><div><p class="text-sm font-medium text-mint-300">Your Green Points balance</p><div class="mt-2 flex items-baseline gap-2"><span id="points-balance" class="font-display text-5xl font-extrabold tracking-tight">0</span><span class="text-sm text-white/60">points</span></div><p class="mt-3 text-sm text-white/60">Earn 1 point for every kg of organic waste logged.</p></div><div class="reward-orb">✦</div></div>
+            <div class="mt-8 flex flex-wrap gap-3"><button class="btn-mint" id="log-100">＋ Log 100kg Waste</button><button class="btn-glass" id="schedule-pickup">Schedule pickup</button></div>
+          </div>
+          <div class="metric-card"><div class="flex items-center justify-between"><span class="metric-label">Your total contribution</span><span class="metric-icon">♻</span></div><div class="metric-value" id="vendor-total">0 <small>kg</small></div><p class="metric-foot">Organic waste logged to date</p><div class="mt-5 h-2 overflow-hidden rounded-full bg-mint-50"><div id="vendor-progress" class="h-full rounded-full bg-mint-500 transition-all" style="width:0%"></div></div><p class="mt-2 text-xs text-muted">Progress toward your 500 kg milestone</p></div>
+        </div>
+        <div class="mt-7 grid gap-6 xl:grid-cols-[1.3fr_.7fr]">
+          <div class="panel-card"><div class="panel-head"><div><h2 class="panel-title">Contribution ledger</h2><p class="panel-subtitle">A record of your waste contributions</p></div><span class="soft-tag">Live records</span></div>
+            <div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Date & time</th><th>Contribution</th><th>Green points</th><th>Status</th></tr></thead><tbody id="vendor-ledger"><tr><td colspan="4" class="empty-state">No contributions yet. Log your first 100 kg to begin.</td></tr></tbody></table></div>
+          </div>
+          <div class="panel-card"><div class="panel-head"><div><h2 class="panel-title">Your impact</h2><p class="panel-subtitle">Estimated circular value</p></div></div>
+            <div class="impact-row"><span class="impact-symbol">🌿</span><div><b id="vendor-fertilizer">0 kg</b><small>Potential bio-fertilizer</small></div></div>
+            <div class="impact-row"><span class="impact-symbol">🚚</span><div><b id="vendor-pickups">0</b><small>Pickup requests</small></div></div>
+            <div class="mt-5 rounded-2xl bg-mint-50 p-4"><p class="text-xs font-bold uppercase tracking-wider text-forest-700">Keep it going</p><p class="mt-2 text-sm leading-6 text-forest-900">Segregate organic waste at source for a cleaner, more efficient collection cycle.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DRIVER -->
+    <section id="screen-driver" class="screen hidden">
+      <div class="dashboard-wrap">
+        <div class="page-heading"><div><p class="eyebrow">Fleet workspace</p><h1 class="page-title">Driver dashboard</h1><p class="mt-2 text-sm text-muted">Find nearby marketplace pickups and complete your delivery run.</p></div><span class="status-pill"><span class="live-dot"></span> Driver portal</span></div>
+        <div class="grid gap-6 xl:grid-cols-[.9fr_1.1fr]">
+          <div class="panel-card">
+            <div class="panel-head"><div><h2 class="panel-title">Available pickups</h2><p class="panel-subtitle">Sorted by estimated proximity</p></div><span id="pickup-count" class="soft-tag">0 requests</span></div>
+            <div id="pickup-list" class="space-y-3"><div class="empty-panel">No pickup requests yet. Log waste from the vendor dashboard.</div></div>
+          </div>
+          <div class="space-y-6">
+            <div class="panel-card">
+              <div class="panel-head"><div><h2 class="panel-title">Route & delivery</h2><p class="panel-subtitle">Illustrative route simulation — not live GPS</p></div><span class="soft-tag">Local route</span></div>
+              <div class="route-box"><div class="route-line"><span class="route-pin origin"></span><div><small>ORIGIN · VENDOR STALL</small><b id="route-origin">Select a pickup</b></div></div><div class="route-line"><span class="route-pin destination"></span><div><small>DESTINATION · PROCESSING CENTRE</small><b>Green-Loop Processing Hub</b></div></div><div class="route-meta"><span>↗ Estimated distance</span><b id="route-distance">—</b></div><div class="route-meta"><span>◷ Estimated travel time</span><b id="route-time">—</b></div></div>
+              <div class="mt-4 flex flex-wrap gap-3"><button id="accept-pickup" class="btn-primary flex-1" disabled>Accept pickup</button><button id="confirm-dropoff" class="btn-secondary flex-1" disabled>Confirm waste drop-off</button></div>
+              <p id="driver-hint" class="mt-3 text-xs leading-5 text-muted">Choose an available request to view its route. Accept it, then confirm the drop-off to complete the simulated delivery.</p>
+            </div>
+            <div class="panel-card"><div class="panel-head"><div><h2 class="panel-title">Today's activity</h2><p class="panel-subtitle">Your simulated driver summary</p></div></div><div class="grid grid-cols-2 gap-3"><div class="mini-stat"><span>Completed drops</span><b id="driver-completed">0</b></div><div class="mini-stat"><span>Delivered weight</span><b id="driver-weight">0 kg</b></div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="screen-admin" class="screen hidden">
+      <div class="dashboard-wrap">
+        <div class="page-heading"><div><p class="eyebrow">Operations intelligence</p><h1 class="page-title">Management overview</h1><p class="mt-2 text-sm text-muted">A live snapshot of collection, conversion and unit economics.</p></div><span class="status-pill"><span class="live-dot"></span> System telemetry</span></div>
+        <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div class="metric-card"><div class="flex justify-between"><span class="metric-label">Waste diverted</span><span class="metric-icon">♻</span></div><div id="admin-waste" class="metric-value">0 <small>kg</small></div><p class="metric-foot">Logged organic waste</p></div>
+          <div class="metric-card"><div class="flex justify-between"><span class="metric-label">Bio-fertilizer</span><span class="metric-icon">🌱</span></div><div id="admin-fertilizer" class="metric-value">0 <small>kg</small></div><p class="metric-foot">Estimated output · 30% yield</p></div>
+          <div class="metric-card"><div class="flex justify-between"><span class="metric-label">Pickup requests</span><span class="metric-icon">🚚</span></div><div id="admin-pickups" class="metric-value">0</div><p class="metric-foot">Across all vendors</p></div>
+          <div class="metric-card"><div class="flex justify-between"><span class="metric-label">Green Points issued</span><span class="metric-icon">✦</span></div><div id="admin-points" class="metric-value">0</div><p class="metric-foot">Vendor reward points</p></div>
+        </div>
+        <div class="mt-6 grid gap-6 xl:grid-cols-[1.25fr_.75fr]">
+          <div class="panel-card"><div class="panel-head"><div><h2 class="panel-title">Revenue vs. operating costs</h2><p class="panel-subtitle">Illustrative financial model in Indian rupees (₹)</p></div><span class="soft-tag">Simulation</span></div><div class="chart-wrap"><canvas id="finance-chart" aria-label="Revenue versus logistics cost chart"></canvas></div><div class="mt-4 grid grid-cols-2 gap-3"><div class="finance-stat"><span>Estimated sales revenue</span><b id="admin-revenue">₹0</b></div><div class="finance-stat"><span>Logistics operating cost</span><b id="admin-cost">₹0</b></div></div></div>
+          <div class="panel-card"><div class="panel-head"><div><h2 class="panel-title">Circular conversion</h2><p class="panel-subtitle">Estimated material allocation</p></div></div><div class="chart-wrap chart-doughnut"><canvas id="conversion-chart" aria-label="Waste conversion chart"></canvas></div><div class="legend-list"><span><i class="legend-dot mint-dot"></i> Bio-fertilizer output (30%)</span><span><i class="legend-dot gray-dot"></i> Other process loss (70%)</span></div></div>
+        </div>
+        <div class="mt-6 panel-card"><div class="panel-head"><div><h2 class="panel-title">Recent logistics activity</h2><p class="panel-subtitle">All vendor requests and delivery states</p></div><button id="reset-demo" class="text-xs font-bold text-rose-600 hover:text-rose-700">Reset demo data</button></div><div class="overflow-x-auto"><table class="data-table"><thead><tr><th>Vendor</th><th>Waste weight</th><th>Estimated fertilizer</th><th>Pickup state</th><th>Green points</th></tr></thead><tbody id="admin-ledger"><tr><td colspan="5" class="empty-state">No activity recorded yet.</td></tr></tbody></table></div></div>
+        <p class="mt-4 text-xs leading-5 text-muted">Model assumptions: fertilizer yield 30%; selling price ₹18/kg; logistics cost ₹3/kg of waste. Values are illustrative and should be replaced with measured local operating data.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-emerald-950/5 bg-white"><div class="mx-auto flex max-w-7xl flex-col justify-between gap-3 px-4 py-6 text-xs text-muted sm:flex-row sm:px-6 lg:px-8"><span>© 2026 Green-Loop Logistics · Local waste, renewed value.</span><span>Prototype simulation · Data stored in this browser</span></div></footer>
+
+  <nav class="mobile-nav md:hidden" aria-label="Mobile navigation"><button data-screen="home">⌂<small>Home</small></button><button data-screen="vendor">♧<small>Vendor</small></button><button data-screen="driver">↗<small>Driver</small></button><button data-screen="admin">▥<small>Admin</small></button></nav>
+  <script src="app.js"></script>
+</body>
+</html>
